@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "build:reason": "dune build @output",
+    "dev:reason": "dune build @output -w",
+    "dev:vite": "vite",
+    "dev": "concurrently pnpm:dev:reason pnpm:dev:vite"
+  },
+  "dependencies": {
+    "@emotion/css": "^11.11.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "concurrently": "^8.2.2",
+    "vite": "^5.2.8"
+  }
+}

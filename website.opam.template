@@ -1,0 +1,3 @@
+pin-depends: [
+  ["styled-ppx.dev" "https://github.com/davesnx/styled-ppx/archive/720a386c7faf54ed19675e197519fbd6ccf3f9b1.tar.gz"]
+]
