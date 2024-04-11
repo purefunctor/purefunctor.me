@@ -4,3 +4,10 @@
     font-weight: 400;
     font-style: normal;
 }
+
+.hanken-grotesk-bold {
+    font-family: "Hanken Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
