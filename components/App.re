@@ -31,5 +31,5 @@
 
 [@react.component]
 let make = () => {
-  <Layout> <main /> </Layout>;
+  <Layout> <Router /> </Layout>;
 };

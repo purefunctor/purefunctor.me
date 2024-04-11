@@ -14,5 +14,7 @@ text-decoration: none;
 
 [@react.component]
 let make = (~children, ~href) => {
-  <a className href> children </a>;
+  let onClick =
+    React.useCallback1(_ => {ReasonReactRouter.push(href)}, [|href|]);
+  <a className onClick> children </a>;
 };
