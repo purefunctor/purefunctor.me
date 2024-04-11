@@ -57,9 +57,14 @@ let make = () => {
     <div className=containerCss>
       <header className=titleCss>
         <h1> {React.string("Justin Garcia")} </h1>
-        <p className=subtitleCss role="doc-subtitle">
+        <FramerMotion.p
+          initial={"opacity": 0.0, "x": 10}
+          animate={"opacity": 1.0, "x": 0}
+          transition={"ease": "easeOut", "delay": 0.20}
+          className=subtitleCss
+          role="doc-subtitle">
           {React.string("Full-Stack Software Developer")}
-        </p>
+        </FramerMotion.p>
       </header>
       <article className=articleCss>
         <p>
@@ -74,7 +79,12 @@ let make = () => {
         </p>
         <p>
           {React.string(
-             "This is the third revision of my website! This is built with ReasonML + React.js to further develop my skills in both tools.",
+             "This is the third revision of my website! It's currently is built with ReasonML + React.js to exercise my skills in both.",
+           )}
+        </p>
+        <p>
+          {React.string(
+             "I'm also actively applying for OCaml / ReasonML roles!",
            )}
         </p>
       </article>
