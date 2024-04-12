@@ -1,16 +1,50 @@
 [@react.component] [@mel.module "framer-motion"] [@mel.scope "motion"]
 external p:
   (
-    ~initial: Js.t({..})=?,
-    ~animate: Js.t({..})=?,
-    ~exit: Js.t({..})=?,
-    ~transition: Js.t({..})=?,
+    ~initial: 'initial=?,
+    ~animate: 'animate=?,
+    ~exit: 'exit=?,
+    ~transition: 'transition=?,
+    ~variants: 'variants=?,
+    ~variant: string=?,
     ~className: string=?,
     ~children: React.element=?,
     ~role: string=?
   ) =>
   React.element =
   "p";
+
+[@react.component] [@mel.module "framer-motion"] [@mel.scope "motion"]
+external ul:
+  (
+    ~initial: 'initial=?,
+    ~animate: 'animate=?,
+    ~exit: 'exit=?,
+    ~transition: 'transition=?,
+    ~variants: 'variants=?,
+    ~variant: string=?,
+    ~className: string=?,
+    ~children: React.element=?,
+    ~role: string=?
+  ) =>
+  React.element =
+  "ul";
+
+[@react.component] [@mel.module "framer-motion"] [@mel.scope "motion"]
+external li:
+  (
+    ~initial: 'initial=?,
+    ~animate: 'animate=?,
+    ~exit: 'exit=?,
+    ~transition: 'transition=?,
+    ~variants: 'variants=?,
+    ~variant: string=?,
+    ~className: string=?,
+    ~children: React.element=?,
+    ~role: string=?
+  ) =>
+  React.element =
+  "li";
 
 module AnimatePresence = {
   [@react.component] [@mel.module "framer-motion"]
