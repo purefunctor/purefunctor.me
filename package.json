@@ -2,7 +2,7 @@
   "scripts": {
     "build:reason": "dune build @output",
     "dev:reason": "dune build @output -w",
-    "dev:vite": "vite",
+    "dev:vite": "vite --host 0.0.0.0",
     "dev": "concurrently pnpm:dev:reason pnpm:dev:vite"
   },
   "dependencies": {
