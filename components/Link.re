@@ -2,12 +2,12 @@ let className = [%cx
   {|
 color: $(Theme.white);
 cursor: pointer;
-text-decoration: none;
+text-decoration-line: underline;
+text-decoration-color: $(Theme.blue);
+text-decoration-thickness: 2px;
 
 &:hover {
-  text-decoration: underline;
-  text-decoration-color: $(Theme.mint);
-  text-decoration-thickness: 2px;
+  color: $(Theme.blue);
 }
 |}
 ];
@@ -15,6 +15,12 @@ text-decoration: none;
 [@react.component]
 let make = (~children, ~href) => {
   let onClick =
-    React.useCallback1(_ => {ReasonReactRouter.push(href)}, [|href|]);
-  <a className onClick> children </a>;
+    React.useCallback1(
+      event => {
+        event |> React.Event.Mouse.preventDefault;
+        ReasonReactRouter.push(href);
+      },
+      [|href|],
+    );
+  <a className href onClick> children </a>;
 };
