@@ -15,6 +15,23 @@ module BookLine = {
   };
 };
 
+module DotLine = {
+  [@react.component]
+  let make = (~size="1em", ~className="") => {
+    <svg
+      className
+      xmlns="http://www.w3.org/2000/svg"
+      width=size
+      height=size
+      viewBox="0 0 256 256">
+      <path
+        fill="currentColor"
+        d="M144 128a16 16 0 1 1-16-16a16 16 0 0 1 16 16"
+      />
+    </svg>;
+  };
+};
+
 module HeartLine = {
   [@react.component]
   let make = (~size="1em", ~className="") => {

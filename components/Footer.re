@@ -1,11 +1,25 @@
-let className = "hanken-grotesk-regular";
+let className =
+  "hanken-grotesk-regular "
+  ++ [%cx
+    {|
+&, & > span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+|}
+  ];
+let separatorCss = [%cx "color: $(Theme.mint)"];
+let heartIconCss = [%cx "color: $(Theme.pink)"];
 
 [@react.component]
 let make = () => {
   <footer className>
-    <span className=[%cx "display: flex; align-items: center; gap: 4px;"]>
+    <span> {React.string([%mel.raw "\"\\u00A9 2024, Justin Garcia\""])} </span>
+    <Icons.DotLine className=separatorCss />
+    <span>
       {React.string("built with ")}
-      <Icons.HeartLine className=[%cx "color: $(Theme.pink)"] />
+      <Icons.HeartLine className=heartIconCss />
       {React.string("in ReasonML")}
     </span>
   </footer>;
