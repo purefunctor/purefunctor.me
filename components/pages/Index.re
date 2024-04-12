@@ -51,6 +51,13 @@ let articleCss =
 |}
   ];
 
+let paragraphs = [|
+  "I am a full-stack software developer from the Philippines who's passionate about functional programming.",
+  "I am mostly self-taught and I enjoy teaching myself whatever topics that I find interesting.",
+  "This is the third revision of my website! It's currently is built with ReasonML + React.js to exercise my skills in both.",
+  "I'm also actively applying for OCaml / ReasonML roles!",
+|];
+
 [@react.component]
 let make = () => {
   <main className=indexCss>
@@ -67,26 +74,11 @@ let make = () => {
         </FramerMotion.p>
       </header>
       <article className=articleCss>
-        <p>
-          {React.string(
-             "I am a full-stack software developer from the Philippines who's passionate about functional programming.",
-           )}
-        </p>
-        <p>
-          {React.string(
-             "I am mostly self-taught and I enjoy teaching myself whatever topics that I find interesting.",
-           )}
-        </p>
-        <p>
-          {React.string(
-             "This is the third revision of my website! It's currently is built with ReasonML + React.js to exercise my skills in both.",
-           )}
-        </p>
-        <p>
-          {React.string(
-             "I'm also actively applying for OCaml / ReasonML roles!",
-           )}
-        </p>
+        {paragraphs
+         |> Array.mapi((index, content) =>
+              <p key={string_of_int(index)}> {React.string(content)} </p>
+            )
+         |> React.array}
       </article>
     </div>
   </main>;
