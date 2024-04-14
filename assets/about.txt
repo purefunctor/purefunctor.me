@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Hanken Grotesk
+- Font Author: Copyright 2021 The Hanken Grotesk Project Authors (https://github.com/marcologous/hanken-grotesk)
+- Font Source: https://fonts.gstatic.com/s/hankengrotesk/v8/ieVq2YZDLWuGJpnzaiwFXS9tYvBRzyFLlZg_f_Ncs2Za4fpNzXhRKA.ttf
+- Font License: SIL Open Font License, 1.1 (http://scripts.sil.org/OFL))
