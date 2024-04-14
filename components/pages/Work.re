@@ -3,16 +3,16 @@ let workCss = [%cx
 display: flex;
 align-items: center;
 justify-content: center;
-
 font-family: "Hanken Grotesk";
-padding-top: 6rem;
-padding-bottom: 6rem;
+padding-top: 3rem;
+padding-bottom: 3rem;
 |}
 ];
 
 let containerCss = [%cx
   {|
 display: grid;
+flex-grow: 1;
 
 $(Theme.afterSmall) {
   gap: 2rem;
@@ -23,11 +23,7 @@ $(Theme.afterSmall) {
 
 let portfolioCss = [%cx
   {|
-padding-top: 2rem;
-padding-bottom: 2rem;
-border-width: 1px 0 1px 0;
-border-style: dotted;
-border-color: $(Theme.white_60);
+margin-bottom: 3rem;
 
 & p {
   font-weight: 300;
@@ -37,8 +33,12 @@ border-color: $(Theme.white_60);
 & > header {
   margin-bottom: 3rem;
   & > h1 {
+    border-bottom: 1px dotted $(Theme.white_60);
     font-size: 3rem;
     margin: 0;
+  }
+  & > p {
+    margin-top: 1rem;
   }
 }
 
