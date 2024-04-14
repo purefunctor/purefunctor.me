@@ -1,0 +1,21 @@
+let links = [|
+  "https://youtu.be/XZlDeyBmoPs",
+  "https://youtu.be/q99wlpFJlqc",
+  "https://youtu.be/0_GBo9lEHPM",
+  "https://youtu.be/93xTBzw1iKA",
+  "https://youtu.be/FxiTjjQ5kqk",
+  "https://youtu.be/nKOekzWZH7Y",
+  "https://youtu.be/0DYTZaMDS3A",
+|];
+
+let getRandomLink = () => {
+  let index = Js.Math.random_int(0, Js.Array.length(links));
+  Js.Array.unsafe_get(links, index);
+};
+
+[@react.component]
+let make = () => {
+  let (href, setHref) = React.useState(() => getRandomLink());
+  let onClick = React.useCallback0(_ => {setHref(_ => getRandomLink())});
+  <a href onClick target="_blank"> {React.string("seiyuu idol music")} </a>;
+};
