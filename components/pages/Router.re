@@ -1,6 +1,6 @@
 [@react.component]
 let make = () => {
-  let url = ReasonReactRouter.useUrl();
+  let url = ServerUrlProvider.useUrl();
   switch (url.path) {
   | [] => <Index />
   | ["work"] => <Work />

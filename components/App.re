@@ -30,6 +30,8 @@
 ];
 
 [@react.component]
-let make = () => {
-  <Layout> <Router /> </Layout>;
+let make = (~serverUrl=?) => {
+  <ServerUrlProvider value={serverUrl |> Js.Nullable.fromOption}>
+    <Layout> <Router /> </Layout>
+  </ServerUrlProvider>;
 };
