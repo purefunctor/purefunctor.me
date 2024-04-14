@@ -4,6 +4,7 @@ let make = () => {
   switch (url.path) {
   | [] => <Index />
   | ["work"] => <Work />
+  | ["profile"] => <Profile />
   | _ => <NotFound />
   };
 };
