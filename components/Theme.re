@@ -1,4 +1,4 @@
-let pink = CssJs.hex("F6B7B7");
+let pink = CssJs.hex("FEC3E7");
 let blue = CssJs.hex("C8E6F9");
 let mint = CssJs.hex("C9F7E5");
 
