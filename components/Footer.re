@@ -15,7 +15,9 @@ let heartIconCss = [%cx "color: $(Theme.pink)"];
 [@react.component]
 let make = () => {
   <footer className>
-    <span> {React.string([%mel.raw "\"\\u00A9 2024, Justin Garcia\""])} </span>
+    <span>
+      {React.string([%mel.raw "\"\\u00A9 2024, Justin Garcia\""])}
+    </span>
     <Icons.DotLine className=separatorCss />
     <span>
       {React.string("built with ")}
