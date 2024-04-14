@@ -100,7 +100,13 @@ let make = () => {
         };
 
       if (shouldClose) {
-        setToggled(_ => ToggleOff);
+        setToggled(previous => {
+          switch (previous) {
+          | Initial => Initial
+          | ToggleOff => ToggleOff
+          | ToggleOn => ToggleOff
+          }
+        });
       };
     });
 
