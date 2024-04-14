@@ -64,6 +64,7 @@ type state =
 [@react.component]
 let make = () => {
   let (toggled, setToggled) = React.useState(() => Initial);
+  let navRef = React.useRef(Js.Nullable.null);
 
   let (initial, animate) =
     switch (toggled) {
@@ -84,7 +85,35 @@ let make = () => {
       );
     });
 
-  <nav className=navCss>
+  let onClickOutside =
+    React.useCallback0(event => {
+      open Webapi.Dom;
+
+      let targetElement =
+        event |> MouseEvent.target |> EventTarget.unsafeAsElement;
+
+      let shouldClose =
+        switch (navRef.current |> Js.Nullable.toOption) {
+        | Some(navElement) =>
+          !(navElement |> Element.contains(targetElement))
+        | None => false
+        };
+
+      if (shouldClose) {
+        setToggled(_ => ToggleOff);
+      };
+    });
+
+  React.useEffect0(() => {
+    open Webapi.Dom;
+
+    window |> Window.addMouseDownEventListener(onClickOutside);
+    Some(
+      () => {window |> Window.removeMouseDownEventListener(onClickOutside)},
+    );
+  });
+
+  <nav className=navCss ref={ReactDOM.Ref.domRef(navRef)}>
     <button onClick className=buttonCss>
       <Icons.MenuLine size="1.5rem" />
     </button>
