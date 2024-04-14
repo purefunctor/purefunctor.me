@@ -2,7 +2,11 @@ let className =
   "hanken-grotesk-regular "
   ++ [%cx
     {|
-&, & > span {
+display: flex;
+flex-direction: column;
+gap: 4px;
+
+& > span {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -18,7 +22,6 @@ let make = () => {
     <span>
       {React.string([%mel.raw "\"\\u00A9 2024, Justin Garcia\""])}
     </span>
-    <Icons.DotLine className=separatorCss />
     <span>
       {React.string("built with ")}
       <Icons.HeartLine className=heartIconCss />
