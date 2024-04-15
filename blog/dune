@@ -3,6 +3,11 @@
  (modes melange)
  (melange.runtime_deps
   (glob_files mdx/*.mdx))
- (libraries melange-webapi reason-react styled-ppx.css styled-ppx.emotion)
+ (libraries
+  common
+  melange-webapi
+  reason-react
+  styled-ppx.css
+  styled-ppx.emotion)
  (preprocess
   (pps melange.ppx reason-react-ppx styled-ppx)))
