@@ -100,6 +100,7 @@ let make = () => {
     (
       React.string("games I like"),
       [|
+        React.string("Ace Combat 4, 7"),
         React.string("Fire Emblem 4, 7, 8, Engage"),
         React.string("Golden Sun"),
         React.string("Persona 5 Royal"),
