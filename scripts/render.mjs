@@ -14,7 +14,11 @@ const routes = [
 
 for (let [name, slug] of routes) {
   const { html, css } = extractCritical(Render.forPath(slug));
-  let head = `<style>${css}</style>`;
+  let head = `
+<meta name="description" content="justin garcia's website and blog">
+<meta property="og:image" content="/banner.png">
+<style>${css}</style>
+`;
   
   const template = fs.readFileSync("./index.html", "utf-8");
   const rendered = template.replace("<!--app-head-->", head ?? "").replace("<!--app-html-->", html ?? "");
