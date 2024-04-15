@@ -16,6 +16,18 @@ let getRandomLink = () => {
 [@react.component]
 let make = () => {
   let (href, setHref) = React.useState(() => Js.Array.unsafe_get(links, 0));
-  let onClick = React.useCallback0(_ => {setHref(_ => getRandomLink())});
+  let onClick = event => {
+    React.Event.Mouse.preventDefault(event);
+    let _ =
+      Webapi.Dom.(
+        window
+        |> Window.open_(
+             ~url=href,
+             ~name="_blank",
+             ~features="noopener,noreferrer",
+           )
+      );
+    setHref(_ => getRandomLink());
+  };
   <a href onClick target="_blank"> {React.string("seiyuu idol music")} </a>;
 };
