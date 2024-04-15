@@ -45,5 +45,5 @@ for (let [name, slug] of config) {
 const mdxFiles = globSync("blog/mdx/*.mdx");
 for (let mdxFile of mdxFiles) {
   let slug = path.basename(mdxFile, ".mdx");
-  renderSingle(`blog/${slug}.html`, ["base", slug]);
+  renderSingle(`blog/${slug}.html`, ["blog", slug]);
 }
