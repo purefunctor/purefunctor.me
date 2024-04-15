@@ -1,14 +1,9 @@
 (include_subdirs unqualified)
 
 (library
- (name components)
+ (name common)
  (modes melange)
- (libraries
-  blog
-  common
-  melange-webapi
-  reason-react
-  styled-ppx.css
-  styled-ppx.emotion)
+ (wrapped false)
+ (libraries melange-webapi reason-react styled-ppx.css styled-ppx.emotion)
  (preprocess
   (pps melange.ppx reason-react-ppx styled-ppx)))
