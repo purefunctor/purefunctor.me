@@ -160,4 +160,4 @@ dist
 .pnp.*
 
 # intermediate files
-ssr/*.html
+ssr/**/*.html

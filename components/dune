@@ -3,6 +3,11 @@
 (library
  (name components)
  (modes melange)
- (libraries melange-webapi reason-react styled-ppx.css styled-ppx.emotion)
+ (libraries
+  blog
+  melange-webapi
+  reason-react
+  styled-ppx.css
+  styled-ppx.emotion)
  (preprocess
   (pps melange.ppx reason-react-ppx styled-ppx)))
