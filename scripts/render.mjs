@@ -13,7 +13,7 @@ function renderSingle(name, slug) {
 <style>${css}</style>
 `;
 
-  const template = fs.readFileSync("./index.html", "utf-8");
+  const template = fs.readFileSync("./index.ssr.html", "utf-8");
   const rendered = template.replace("<!--app-head-->", head ?? "").replace("<!--app-html-->", html ?? "");
 
   let dirname = path.join("ssr", path.dirname(name));

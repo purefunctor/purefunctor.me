@@ -5,9 +5,9 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   resolve: {
-    alias: [
-      { find: "~", replacement: resolve(__dirname, "..") },
-    ],
+    alias: {
+      "~": resolve(__dirname, "../"),
+    },
   },
   build: {
     rollupOptions: {
