@@ -1,6 +1,6 @@
 let links = [|
-  "https://youtu.be/XZlDeyBmoPs",
   "https://youtu.be/q99wlpFJlqc",
+  "https://youtu.be/XZlDeyBmoPs",
   "https://youtu.be/0_GBo9lEHPM",
   "https://youtu.be/93xTBzw1iKA",
   "https://youtu.be/FxiTjjQ5kqk",
@@ -15,7 +15,7 @@ let getRandomLink = () => {
 
 [@react.component]
 let make = () => {
-  let (href, setHref) = React.useState(() => getRandomLink());
+  let (href, setHref) = React.useState(() => Js.Array.unsafe_get(links, 0));
   let onClick = React.useCallback0(_ => {setHref(_ => getRandomLink())});
   <a href onClick target="_blank"> {React.string("seiyuu idol music")} </a>;
 };
