@@ -2,22 +2,31 @@ import fs from "node:fs";
 import path, { basename, resolve } from "node:path";
 import { globSync } from "glob";
 
-import { extractCritical } from "@emotion/server";
+import { constructStyleTagsFromChunks, extractCriticalToChunks } from "@emotion/server";
+
 import * as Render from "../_build/default/app/output/app/Render.mjs";
+import * as ReactDOMServer from "react-dom/server";
 
 function renderSingle(name, slug) {
-  const { html, css } = extractCritical(Render.forPath(slug));
+  const element = Render.elementFor(slug);
+  const markup = ReactDOMServer.renderToString(element);
+  const chunks = extractCriticalToChunks(markup);
+
+  const html = chunks.html;
+  const styles = constructStyleTagsFromChunks(chunks);
+
   let head = `
 <meta name="description" content="justin garcia's website and blog">
 <meta property="og:image" content="/banner.png">
-<style>${css}</style>
-`;
+${styles}
+  `;
 
   const template = fs.readFileSync("./index.html", "utf-8");
   const rendered = template
     .replace("<!--app-head-->", head ?? "")
     .replace("<!--app-html-->", html ?? "")
     .replace("_build", resolve(basename(import.meta.url), "..", "_build"))
+    .replace("Main.mjs", "Hydrate.mjs")
     .replace("index.css", resolve(basename(import.meta.url), "..", "index.css"));
 
   let dirname = path.join("ssr", path.dirname(name));

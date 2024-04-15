@@ -5,4 +5,4 @@
   (es6 mjs))
  (libraries components reason-react melange.belt)
  (preprocess
-  (pps reason-react-ppx)))
+  (pps melange.ppx reason-react-ppx)))
