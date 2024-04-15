@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import path from "node:path";
+import path, { basename, resolve } from "node:path";
 import { globSync } from "glob";
 
 import { extractCritical } from "@emotion/server";
@@ -13,8 +13,12 @@ function renderSingle(name, slug) {
 <style>${css}</style>
 `;
 
-  const template = fs.readFileSync("./index.ssr.html", "utf-8");
-  const rendered = template.replace("<!--app-head-->", head ?? "").replace("<!--app-html-->", html ?? "");
+  const template = fs.readFileSync("./index.html", "utf-8");
+  const rendered = template
+    .replace("<!--app-head-->", head ?? "")
+    .replace("<!--app-html-->", html ?? "")
+    .replace("_build", resolve(basename(import.meta.url), "..", "_build"))
+    .replace("index.css", resolve(basename(import.meta.url), "..", "index.css"));
 
   let dirname = path.join("ssr", path.dirname(name));
   fs.mkdirSync(dirname, { recursive: true });
