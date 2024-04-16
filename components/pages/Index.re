@@ -124,6 +124,8 @@ let paragraphs = [|
     <Link href="/work"> {React.string("portfolio")} </Link>
     {React.string(" and ")}
     <Link href="/profile"> {React.string("profile")} </Link>
+    {React.string(" and ")}
+    <Link href="/blog"> {React.string("blog")} </Link>
     {React.string(" pages.")}
   </>,
 |];

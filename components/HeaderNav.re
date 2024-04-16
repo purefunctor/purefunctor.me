@@ -130,6 +130,9 @@ let make = () => {
       <FramerMotion.li variants=liVariants>
         <Link href="/profile"> {React.string("Profile")} </Link>
       </FramerMotion.li>
+      <FramerMotion.li variants=liVariants>
+        <Link href="/blog"> {React.string("Blog")} </Link>
+      </FramerMotion.li>
     </FramerMotion.ul>
   </nav>;
 };
