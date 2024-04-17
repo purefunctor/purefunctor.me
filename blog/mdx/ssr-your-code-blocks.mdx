@@ -1,0 +1,314 @@
+export const title = "SSR Your Code Blocks";
+export const description = "or how this site avoids client-side syntax highlighting."
+
+# SSR Your Code Blocks
+
+or how this site avoids client-side syntax highlighting.
+
+## Preface
+
+In the previous iteration of my [website](https://purefunctor.me), I was inspired by [toastal's post on client-side syntax highlighting](https://toast.al/posts/softwarecraft/2023-07-28_client-side-syntax-highlighting-must-stop) to add a build-time transformation for HTML that highlights code blocks with [highlight.js](https://highlightjs.org/). It worked quite well and was compliant with the _no JavaScript on the client_ rule that I had for that specific iteration of the website. 
+
+I've come to the conclusion that  it really doesn't take that much effort to get server-side syntax highlighting to work, at least on static HTML. The story might be a little different for a React-based frontend, yet, I managed to get it to work on this site; what gives?
+
+## ReasonReact
+
+If you may not already know, this website is built with [ReasonReact](https://reasonml.github.io/reason-react/). As the project describes itself:
+
+> _It's just React_
+
+It's true! There's no additional runtime and it compiles down to the same JavaScript code that you might see had you written the application using JSX. Consequently, components written in JavaScript can be used freely in ReasonML, and vice-versa; you just need some [foreign imports](https://reasonml.github.io/reason-react/docs/en/importing-js-into-reason) and you're good to go.
+
+That being said, I could've written this website in JSX, but I decided to stick with ReasonML because:
+
+* I like the language, much better than TypeScript;
+* It's a good learning exercise for both ReasonML and React;
+* It keeps me away from JavaScript tooling, even just a little.
+
+Unsurprisingly, any trick that you can do in React applies to ReasonReact as well. One of those tricks is cobbling together a build-time script to render React ahead-of-time.
+
+## An SSR Script
+
+I won't bore you with the details on how I built SSR, but here's what the rendering script looks like:
+
+```javascript
+import fs from "node:fs";
+import path, { basename, resolve } from "node:path";
+import { globSync } from "glob";
+
+import { constructStyleTagsFromChunks, extractCriticalToChunks } from "@emotion/server";
+
+import * as Render from "../_build/default/app/output/app/Render.mjs";
+import * as ReactDOMServer from "react-dom/server";
+
+const template = fs.readFileSync("./index.html", "utf-8")
+  .replace("_build", resolve(basename(import.meta.url), "..", "_build"))
+  .replace("node_modules", resolve(basename(import.meta.url), "..", "node_modules"))
+  .replace("Main.mjs", "Hydrate.mjs")
+  .replace("index.css", resolve(basename(import.meta.url), "..", "index.css"));
+
+function renderSingle(name, slug) {
+  const element = Render.elementFor(slug);
+  const markup = ReactDOMServer.renderToString(element);
+  const chunks = extractCriticalToChunks(markup);
+
+  const html = chunks.html;
+  const styles = constructStyleTagsFromChunks(chunks);
+
+  let head = `
+<meta name="description" content="justin garcia's website and blog">
+<meta property="og:image" content="/banner.png">
+${styles}
+  `;
+
+  const rendered = template
+    .replace("<!--app-head-->", head ?? "")
+    .replace("<!--app-html-->", html ?? "");
+
+  let dirname = path.join("ssr", path.dirname(name));
+  fs.mkdirSync(dirname, { recursive: true });
+
+  let filename = path.join(dirname, path.basename(name));
+  fs.writeFileSync(filename, rendered);
+}
+
+// top-level pages
+
+const config = [
+  ["index.html", []],
+  ["work.html", ["work"]],
+  ["profile.html", ["profile"]],
+  ["blog.html", ["blog"]],
+  ["404.html", ["404"]],
+]
+
+for (let [name, slug] of config) {
+  renderSingle(name, slug);
+}
+
+// individual blog posts
+
+const mdxFiles = globSync("blog/mdx/*.mdx");
+for (let mdxFile of mdxFiles) {
+  let slug = path.basename(mdxFile, ".mdx");
+  renderSingle(`blog/${slug}.html`, ["blog", slug]);
+}
+renderSingle(`blog/404.html`, ["404"]);
+```
+
+The script produces the following files when run:
+
+```text
+ssr
+├── 404.html
+├── blog
+│   ├── 404.html
+│   └── ssr-your-code-blocks.html
+├── blog.html
+├── index.html
+├── profile.html
+└── work.html
+```
+
+Then, these files are consumed by the build tool and bundled for deployment to [Cloudflare Pages](https://pages.cloudflare.com/).
+
+## Syntax Highlighting Component
+
+Getting syntax highlighting to work for this website was an arduous journey that's worth all the effort.
+
+My first attempt at getting syntax highlighting to work involved the [react-syntax-highlighter](https://www.npmjs.com/package/react-syntax-highlighter) package suggested by the [MDX documentation on syntax highlighting](https://mdxjs.com/guides/syntax-highlighting/). It worked great initially, but I was quickly thwarted by arcane import errors related to the package [not being properly set up](https://publint.dev/react-syntax-highlighter@15.5.0) for CommonJS and ESModule imports.
+
+Going back to my contempt for JavaScript tooling, I decided it would be a better idea if I just built the component myself; that way, I have full control of what's being done by the code behind the scenes.
+> _It keeps me away from JavaScript tooling, even just a little._
+
+### Highlight.js
+
+First, I needed to write bindings for highlight.js:
+
+```reasonml
+type language;
+type options = {language: string};
+type result = {value: string};
+type hljs = {
+  highlight: (string, options, bool) => result,
+  registerLanguage: (string, language) => unit,
+};
+
+[@mel.module "highlight.js/lib/core"] external hljs: hljs = "default";
+
+module Languages = {
+  [@mel.module "highlight.js/lib/languages/javascript"]
+  external javascript: language = "default";
+
+  [@mel.module "highlight.js/lib/languages/python"]
+  external python: language = "default";
+
+  [@mel.module "highlight.js/lib/languages/plaintext"]
+  external plaintext: language = "default";
+
+  [@mel.module "highlight.js/lib/languages/reasonml"]
+  external reasonml: language = "default";
+
+  [@mel.module "highlight.js/lib/languages/haskell"]
+  external haskell: language = "default";
+
+  let all = [|
+    ("javascript", javascript),
+    ("python", python),
+    ("text", plaintext),
+    ("reasonml", reasonml),
+    ("purescript", haskell),
+  |];
+};
+
+let lazyInitialize = {
+  let initialized = ref(false);
+  () =>
+    if (! initialized^) {
+      initialized := true;
+      Languages.all
+      |> Array.iter(((languageName, languageModule)) => {
+           hljs.registerLanguage(languageName, languageModule)
+         });
+    };
+};
+
+let highlight = (~ignoreIllegals=false, code, options) => {
+  lazyInitialize();
+  hljs.highlight(code, options, ignoreIllegals);
+};
+```
+
+This binding uses the [highlight.js Core API](https://highlightjs.readthedocs.io/en/latest/api.html) to minimize what languages are imported (and used) during runtime. It performs initialization automatically and lazily on the first call to the highlight function to make the API a little bit more seamless.
+
+### CustomCode
+
+With bindings to highlight.js in place, I could now start working on the React component that will be passed to MDX as a custom component. I've set a few requirements for the component, ordered by how easy they can be implemented:
+
+1. It should work with client-side rendering;
+2. It should work with server-side rendering;
+3. On hydration, it should not repeat highlighting.
+
+Both client-side and server-side rendering is quite trivial, the following code works for both!
+
+```reasonml
+module CustomCode = {
+  [@react.component]
+  let make = (~className=?, ~children="") => {
+    let kind = inferKind(className);
+
+    switch (kind) {
+    | HasLanguage(className, languageName) =>
+
+      let innerHTML =
+        Hljs.highlight(children, {language: languageName}).value;
+
+      <>
+        <small> {React.string(languageName)} </small>
+        <div className=divCss>
+          <code className dangerouslySetInnerHTML={"__html": innerHTML} />
+        </div>
+      </>;
+
+    | NoLanguage => <code> {React.string(children)} </code>
+    };
+  };
+};
+```
+
+However, we'd like to avoid calling highlight.js on the client if we've already done the work on the server. I was able to implement this for CustomCode using the following approach:
+
+1. [useId](https://react.dev/reference/react/useId) can be used to create a consistent ID between server and client renders.
+2. When the page is rendered on the server, the resulting HTML contains an element with said ID.
+3. Then on the client, if it exists on the DOM, its innerHTML is copied and pasted.
+4. Otherwise, highlight.js is called as usual on the code block contents.
+
+The resulting component looks a little something like this:
+
+```reasonml
+module CustomCode = {
+  type kind =
+    | HasLanguage(string, string)
+    | NoLanguage;
+
+  let inferKind = className => {
+    let languageCaptures =
+      Option.bind(className, className => {
+        [%re "/language-(\\w+)/"]
+        |> Js.Re.exec(~str=className)
+        |> Option.map(Js.Re.captures)
+      });
+
+    let languageName =
+      Option.bind(
+        languageCaptures,
+        languageCaptures => {
+          let languageName = Array.unsafe_get(languageCaptures, 1);
+          Js.Nullable.toOption(languageName);
+        },
+      );
+
+    switch (className, languageName) {
+    | (Some(className), Some(languageName)) =>
+      HasLanguage(className, languageName)
+    | _ => NoLanguage
+    };
+  };
+
+  let divCss = [%cx {| overflow: scroll; padding: 1rem; |}];
+
+  let exists = (~id, ~className, ~languageName, ~innerHTML) => {
+    <>
+      <small> {React.string(languageName)} </small>
+      <div className=divCss>
+        <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
+      </div>
+    </>;
+  };
+
+  let create = (~id, ~className, ~languageName, ~children) => {
+    let innerHTML = Hljs.highlight(children, {language: languageName}).value;
+    exists(~id, ~className, ~languageName, ~innerHTML);
+  };
+
+  let inline = (~id, ~children) => {
+    <code id> {React.string(children)} </code>;
+  };
+
+  [@react.component]
+  let make = (~className=?, ~children="") => {
+    let id = React.useId();
+    let kind = inferKind(className);
+
+    switch (kind) {
+    | HasLanguage(className, languageName) =>
+      let document = [%mel.external document];
+      let innerHTML =
+        Option.bind(
+          document,
+          document => {
+            let escaped = "#" ++ cssEscape(id);
+            document
+            |> Webapi.Dom.Document.querySelector(escaped)
+            |> Option.map(Webapi.Dom.Element.innerHTML);
+          },
+        );
+      switch (innerHTML) {
+      | Some(innerHTML) => exists(~id, ~className, ~languageName, ~innerHTML)
+      | None => create(~id, ~className, ~languageName, ~children)
+      };
+    | NoLanguage => inline(~id, ~children)
+    };
+  };
+};
+```
+
+After passing the component to MDX... it just works!
+
+## Closing Thoughts
+
+Overall I'm pretty satisfied with how the integration turned out, especially since it only took me a day to figure things out (and about a week or so to build the entire website from scratch). The source code for this site is open-source, so feel free to check out if there's any updates to this component.
+
+If you're building a blog from scratch like this in your personal site, and you're also using SSR/SSG or whatnot, I _highly_ suggest figuring out how to get server-side syntax highlighting working on whatever setup you have.
+
+The component I shared is written in ReasonML, but I think it reads enough like JSX for easy porting.
