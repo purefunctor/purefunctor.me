@@ -58,18 +58,24 @@ module CustomCode = {
     };
   };
 
-  let copy = (~id, ~className, ~languageName, ~innerHTML) => {
+  let divCss = [%cx {| overflow: scroll; padding: 1rem; |}];
+
+  let inner = (~id, ~className, ~languageName, ~innerHTML) => {
     <>
-      <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
       <small> {React.string(languageName)} </small>
+      <div className=divCss>
+        <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
+      </div>
     </>;
   };
 
   let create = (~id, ~className, ~languageName, ~children) => {
     let innerHTML = Hljs.highlight(children, {language: languageName}).value;
     <>
-      <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
       <small> {React.string(languageName)} </small>
+      <div className=divCss>
+        <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
+      </div>
     </>;
   };
 
@@ -96,7 +102,7 @@ module CustomCode = {
           },
         );
       switch (innerHTML) {
-      | Some(innerHTML) => copy(~id, ~className, ~languageName, ~innerHTML)
+      | Some(innerHTML) => inner(~id, ~className, ~languageName, ~innerHTML)
       | None => create(~id, ~className, ~languageName, ~children)
       };
     | NoLanguage => inline(~id, ~children)
@@ -109,7 +115,6 @@ module CustomPre = {
     {|
 font-size: 1rem;
 position: relative;
-padding: 1rem;
 border: 2px solid $(Theme.white_60);
 
 & > small {
@@ -148,16 +153,35 @@ margin-bottom: 6rem;
 
 & > h2 {
   font-size: 2rem;
-  margin: 2rem 0 0 0;
+  margin: 3rem 0 0 0;
 }
 
 & > h3 {
   font-size: 1.5rem;
-  margin: 2rem 0 0 0;
+  margin: 3rem 0 0 0;
 }
 
-& > p {
+& p {
+  font-size: 1.1rem;
+  line-height: 1.6;
   margin: 1rem 0 1rem 0;
+}
+
+& a {
+  color: $(Theme.white);
+  cursor: pointer;
+  text-decoration-line: underline;
+  text-decoration-color: $(Theme.blue);
+  text-decoration-thickness: 2px;
+
+  &:hover {
+    color: $(Theme.blue);
+  }
+}
+
+& li {
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 |}
 ];
