@@ -9,8 +9,14 @@ type hljs = {
 [@mel.module "highlight.js/lib/core"] external hljs: hljs = "default";
 
 module Languages = {
+  [@mel.module "highlight.js/lib/languages/javascript"]
+  external javascript: language = "default";
+
   [@mel.module "highlight.js/lib/languages/python"]
   external python: language = "default";
+
+  [@mel.module "highlight.js/lib/languages/plaintext"]
+  external plaintext: language = "default";
 
   [@mel.module "highlight.js/lib/languages/reasonml"]
   external reasonml: language = "default";
@@ -19,7 +25,9 @@ module Languages = {
   external haskell: language = "default";
 
   let all = [|
+    ("javascript", javascript),
     ("python", python),
+    ("text", plaintext),
     ("reasonml", reasonml),
     ("purescript", haskell),
   |];
