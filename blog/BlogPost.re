@@ -13,10 +13,30 @@ font-family: "Hanken Grotesk";
 margin-top: 6rem;
 margin-bottom: 6rem;
 
+& > h1, & > h2, & > h3, & > p {
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
 & > h1 {
   border-bottom: 1px dotted $(Theme.white_60);
   font-size: 3rem;
-  margin: 0;
+  margin: 3rem 0 0 0;
+}
+
+& > h2 {
+  font-size: 2rem;
+  margin: 2rem 0 0 0;
+}
+
+& > h3 {
+  font-size: 1.5rem;
+  margin: 2rem 0 0 0;
+}
+
+& > p {
+  margin: 1rem 0 1rem 0;
 }
 |}
 ];
