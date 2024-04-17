@@ -87,7 +87,7 @@ module CustomPre = {
     {|
 font-size: 1rem;
 position: relative;
-padding: calc(1rem - 2px);
+padding: 1rem;
 border: 2px solid $(Theme.white_60);
 
 & > small {
@@ -95,7 +95,7 @@ border: 2px solid $(Theme.white_60);
   position: absolute;
   top: 0;
   right: 0;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 |}
   ];
