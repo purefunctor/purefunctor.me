@@ -18,7 +18,11 @@ module Languages = {
   [@mel.module "highlight.js/lib/languages/haskell"]
   external haskell: language = "default";
 
-  let all = [|("python", python), ("reasonml", reasonml), ("purescript", haskell)|];
+  let all = [|
+    ("python", python),
+    ("reasonml", reasonml),
+    ("purescript", haskell),
+  |];
 };
 
 let lazyInitialize = {
