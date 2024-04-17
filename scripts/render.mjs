@@ -26,6 +26,7 @@ ${styles}
     .replace("<!--app-head-->", head ?? "")
     .replace("<!--app-html-->", html ?? "")
     .replace("_build", resolve(basename(import.meta.url), "..", "_build"))
+    .replace("node_modules", resolve(basename(import.meta.url), "..", "node_modules"))
     .replace("Main.mjs", "Hydrate.mjs")
     .replace("index.css", resolve(basename(import.meta.url), "..", "index.css"));
 

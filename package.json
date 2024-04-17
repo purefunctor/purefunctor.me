@@ -5,11 +5,14 @@
     "build:ssr": "node --import ./scripts/register.mjs ./scripts/render.mjs && vite build ssr",
     "dev:reason": "dune build @output -w",
     "dev:vite": "vite --host 0.0.0.0",
-    "dev": "concurrently pnpm:dev:reason pnpm:dev:vite"
+    "dev": "concurrently pnpm:dev:reason pnpm:dev:vite",
+    "preview:ssr": "pnpm build:ssr && wrangler pages dev"
   },
   "dependencies": {
     "@emotion/css": "^11.11.2",
+    "css.escape": "^1.5.1",
     "framer-motion": "^11.0.28",
+    "highlight.js": "^11.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

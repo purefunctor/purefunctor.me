@@ -12,7 +12,7 @@ margin-bottom: 3rem;
 
 module Entry = {
   [@react.component]
-  let make = (~post: (module BlogPost.T)) => {
+  let make = (~post: (module BlogPostCore.MdxPost)) => {
     let (module Post) = post;
 
     let href =
