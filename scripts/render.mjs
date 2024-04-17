@@ -7,6 +7,12 @@ import { constructStyleTagsFromChunks, extractCriticalToChunks } from "@emotion/
 import * as Render from "../_build/default/app/output/app/Render.mjs";
 import * as ReactDOMServer from "react-dom/server";
 
+const template = fs.readFileSync("./index.html", "utf-8")
+  .replace("_build", resolve(basename(import.meta.url), "..", "_build"))
+  .replace("node_modules", resolve(basename(import.meta.url), "..", "node_modules"))
+  .replace("Main.mjs", "Hydrate.mjs")
+  .replace("index.css", resolve(basename(import.meta.url), "..", "index.css"));
+
 function renderSingle(name, slug) {
   const element = Render.elementFor(slug);
   const markup = ReactDOMServer.renderToString(element);
@@ -21,14 +27,9 @@ function renderSingle(name, slug) {
 ${styles}
   `;
 
-  const template = fs.readFileSync("./index.html", "utf-8");
   const rendered = template
     .replace("<!--app-head-->", head ?? "")
-    .replace("<!--app-html-->", html ?? "")
-    .replace("_build", resolve(basename(import.meta.url), "..", "_build"))
-    .replace("node_modules", resolve(basename(import.meta.url), "..", "node_modules"))
-    .replace("Main.mjs", "Hydrate.mjs")
-    .replace("index.css", resolve(basename(import.meta.url), "..", "index.css"));
+    .replace("<!--app-html-->", html ?? "");
 
   let dirname = path.join("ssr", path.dirname(name));
   fs.mkdirSync(dirname, { recursive: true });
