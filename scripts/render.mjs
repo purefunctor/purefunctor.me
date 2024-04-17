@@ -44,6 +44,7 @@ const config = [
   ["work.html", ["work"]],
   ["profile.html", ["profile"]],
   ["blog.html", ["blog"]],
+  ["404.html", ["404"]],
 ]
 
 for (let [name, slug] of config) {
@@ -57,3 +58,4 @@ for (let mdxFile of mdxFiles) {
   let slug = path.basename(mdxFile, ".mdx");
   renderSingle(`blog/${slug}.html`, ["blog", slug]);
 }
+renderSingle(`blog/404.html`, ["404"]);

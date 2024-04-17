@@ -6,6 +6,7 @@ let make = () => {
   | ["work"] => <Work />
   | ["profile"] => <Profile />
   | ["blog", ...slug] => <Blog slug />
+  | ["404"]
   | _ => <NotFound />
   };
 };

@@ -5,7 +5,7 @@ import { basename, resolve } from "node:path";
 import { defineConfig } from "vite";
 
 let mdxFiles = globSync(resolve(__dirname, "..", "blog/mdx/*.mdx"));
-let blogInputs = {};
+let blogInputs = {"blog_404": resolve(__dirname, "blog", "404.html")};
 
 for (let mdxFile of mdxFiles) {
   let slug = basename(mdxFile, ".mdx");
@@ -20,6 +20,7 @@ export default defineConfig({
         work: resolve(__dirname, "work.html"),
         profile: resolve(__dirname, "profile.html"),
         blog: resolve(__dirname, "blog.html"),
+        _404: resolve(__dirname, "404.html"),
         ...blogInputs,
       }
     },
