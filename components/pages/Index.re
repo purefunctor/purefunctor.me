@@ -122,9 +122,9 @@ let paragraphs = [|
   <>
     {React.string("You can read more in my ")}
     <Link href="/work"> {React.string("portfolio")} </Link>
-    {React.string(" and ")}
+    {React.string(", ")}
     <Link href="/profile"> {React.string("profile")} </Link>
-    {React.string(" and ")}
+    {React.string(", and ")}
     <Link href="/blog"> {React.string("blog")} </Link>
     {React.string(" pages.")}
   </>,
