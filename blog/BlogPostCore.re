@@ -3,8 +3,8 @@ type customComponents('code, 'pre) = {
     (
       {
         ..
-        "className": string,
-        "children": string,
+        "className": option(string),
+        "children": option(string),
       } as 'code
     ) =>
     React.element,
@@ -30,23 +30,42 @@ module type MdxPost = {
 [@mel.module "css.escape"] external cssEscape: string => string = "default";
 
 module CustomCode = {
-  let extractLanguageName = className => {
-    let languageCaptures =
-      [%re "/language-(\\w+)/"]
-      |> Js.Re.exec(~str=className)
-      |> Option.map(Js.Re.captures);
+  type kind =
+    | HasLanguage(string, string)
+    | NoLanguage;
 
-    Option.bind(
-      languageCaptures,
-      languageCaptures => {
-        let languageName = Array.unsafe_get(languageCaptures, 1);
-        Js.Nullable.toOption(languageName);
-      },
-    )
-    |> Option.value(~default="text");
+  let inferKind = className => {
+    let languageCaptures =
+      Option.bind(className, className => {
+        [%re "/language-(\\w+)/"]
+        |> Js.Re.exec(~str=className)
+        |> Option.map(Js.Re.captures)
+      });
+
+    let languageName =
+      Option.bind(
+        languageCaptures,
+        languageCaptures => {
+          let languageName = Array.unsafe_get(languageCaptures, 1);
+          Js.Nullable.toOption(languageName);
+        },
+      );
+
+    switch (className, languageName) {
+    | (Some(className), Some(languageName)) =>
+      HasLanguage(className, languageName)
+    | _ => NoLanguage
+    };
   };
 
-  let render = (~id, ~className, ~languageName, ~children) => {
+  let copy = (~id, ~className, ~languageName, ~innerHTML) => {
+    <>
+      <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
+      <small> {React.string(languageName)} </small>
+    </>;
+  };
+
+  let create = (~id, ~className, ~languageName, ~children) => {
     let innerHTML = Hljs.highlight(children, {language: languageName}).value;
     <>
       <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
@@ -54,30 +73,33 @@ module CustomCode = {
     </>;
   };
 
+  let inline = (~id, ~children) => {
+    <code id> {React.string(children)} </code>;
+  };
+
   [@react.component]
-  let make = (~className, ~children) => {
-    let languageName = extractLanguageName(className);
+  let make = (~className=?, ~children="") => {
     let id = React.useId();
+    let kind = inferKind(className);
 
-    let document = [%mel.external document];
-    let innerHTML =
-      Option.bind(
-        document,
-        document => {
-          let escaped = "#" ++ cssEscape(id);
-          document
-          |> Webapi.Dom.Document.querySelector(escaped)
-          |> Option.map(Webapi.Dom.Element.innerHTML);
-        },
-      );
-
-    switch (innerHTML) {
-    | Some(innerHTML) =>
-      <>
-        <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
-        <small> {React.string(languageName)} </small>
-      </>
-    | None => render(~id, ~className, ~languageName, ~children)
+    switch (kind) {
+    | HasLanguage(className, languageName) =>
+      let document = [%mel.external document];
+      let innerHTML =
+        Option.bind(
+          document,
+          document => {
+            let escaped = "#" ++ cssEscape(id);
+            document
+            |> Webapi.Dom.Document.querySelector(escaped)
+            |> Option.map(Webapi.Dom.Element.innerHTML);
+          },
+        );
+      switch (innerHTML) {
+      | Some(innerHTML) => copy(~id, ~className, ~languageName, ~innerHTML)
+      | None => create(~id, ~className, ~languageName, ~children)
+      };
+    | NoLanguage => inline(~id, ~children)
     };
   };
 };
