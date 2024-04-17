@@ -24,3 +24,8 @@ let make = (~children, ~href) => {
     );
   <a className href onClick> children </a>;
 };
+
+[@react.component]
+let basic = (~href, ~children, ~target=?) => {
+  <a className href ?target> children </a>;
+};
