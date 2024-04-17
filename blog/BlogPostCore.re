@@ -60,7 +60,7 @@ module CustomCode = {
 
   let divCss = [%cx {| overflow: scroll; padding: 1rem; |}];
 
-  let inner = (~id, ~className, ~languageName, ~innerHTML) => {
+  let exists = (~id, ~className, ~languageName, ~innerHTML) => {
     <>
       <small> {React.string(languageName)} </small>
       <div className=divCss>
@@ -71,12 +71,7 @@ module CustomCode = {
 
   let create = (~id, ~className, ~languageName, ~children) => {
     let innerHTML = Hljs.highlight(children, {language: languageName}).value;
-    <>
-      <small> {React.string(languageName)} </small>
-      <div className=divCss>
-        <code id className dangerouslySetInnerHTML={"__html": innerHTML} />
-      </div>
-    </>;
+    exists(~id, ~className, ~languageName, ~innerHTML);
   };
 
   let inline = (~id, ~children) => {
@@ -102,7 +97,7 @@ module CustomCode = {
           },
         );
       switch (innerHTML) {
-      | Some(innerHTML) => inner(~id, ~className, ~languageName, ~innerHTML)
+      | Some(innerHTML) => exists(~id, ~className, ~languageName, ~innerHTML)
       | None => create(~id, ~className, ~languageName, ~children)
       };
     | NoLanguage => inline(~id, ~children)
