@@ -58,7 +58,7 @@ module CustomCode = {
     };
   };
 
-  let divCss = [%cx {| overflow: scroll; padding: 1rem; |}];
+  let divCss = [%cx {| overflow: auto; padding: 1rem; |}];
 
   let exists = (~id, ~className, ~languageName, ~innerHTML) => {
     <>
