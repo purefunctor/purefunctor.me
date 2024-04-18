@@ -15,7 +15,7 @@
     min-height: 100vh;
   }
 
-  #root > :nth-child(2) {
+  #root > main {
     flex-grow: 1;
   }
 
@@ -32,6 +32,8 @@
 [@react.component]
 let make = (~serverUrl=?) => {
   <ServerUrlProvider value={serverUrl |> Js.Nullable.fromOption}>
-    <Layout> <Router /> </Layout>
+    <Header />
+    <Router />
+    <Footer />
   </ServerUrlProvider>;
 };
