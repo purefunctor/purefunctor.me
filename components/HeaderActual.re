@@ -30,14 +30,15 @@ gap: 0.5rem;
 ];
 
 [@react.component]
-let make = (~toggleKind: unit => unit) => {
-  <header className=headerCss>
-    <Icons.BookLine />
-    <Link href="/"> {React.string("Justin Garcia")} </Link>
-    <div>
-      <button onClick={_ => toggleKind()}>
-        <Icons.MenuLine size="1.5rem" />
-      </button>
-    </div>
-  </header>;
-};
+let make =
+  React.memo((~toggleKind: unit => unit) => {
+    <header className=headerCss>
+      <Icons.BookLine />
+      <Link href="/"> {React.string("Justin Garcia")} </Link>
+      <div>
+        <button onClick={_ => toggleKind()}>
+          <Icons.MenuLine size="1.5rem" />
+        </button>
+      </div>
+    </header>
+  });

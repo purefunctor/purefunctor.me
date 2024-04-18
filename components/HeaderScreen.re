@@ -97,34 +97,42 @@ text-decoration-thickness: 4px;
   };
 };
 
+module ScreenLinks = {
+  [@react.component]
+  let make =
+    React.memo((~toggleKind) => {
+      <nav className=navCss>
+        <ul>
+          <FramerMotion.li variants=liVariants>
+            <ScreenLink href="/" toggleKind>
+              {React.string("Home")}
+            </ScreenLink>
+          </FramerMotion.li>
+          <FramerMotion.li variants=liVariants>
+            <ScreenLink href="/blog" toggleKind>
+              {React.string("Blog")}
+            </ScreenLink>
+          </FramerMotion.li>
+          <FramerMotion.li variants=liVariants>
+            <ScreenLink href="/work" toggleKind>
+              {React.string("Work")}
+            </ScreenLink>
+          </FramerMotion.li>
+          <FramerMotion.li variants=liVariants>
+            <ScreenLink href="/profile" toggleKind>
+              {React.string("Profile")}
+            </ScreenLink>
+          </FramerMotion.li>
+        </ul>
+      </nav>
+    });
+};
+
 [@react.component]
 let make = (~kind: HeaderState.t, ~toggleKind) => {
   let (initial, animate) = HeaderState.useInitialAnimate(kind);
 
   <FramerMotion.div variants=divVariants initial animate className=divCss>
-    <nav className=navCss>
-      <ul>
-        <FramerMotion.li variants=liVariants>
-          <ScreenLink href="/" toggleKind>
-            {React.string("Home")}
-          </ScreenLink>
-        </FramerMotion.li>
-        <FramerMotion.li variants=liVariants>
-          <ScreenLink href="/blog" toggleKind>
-            {React.string("Blog")}
-          </ScreenLink>
-        </FramerMotion.li>
-        <FramerMotion.li variants=liVariants>
-          <ScreenLink href="/work" toggleKind>
-            {React.string("Work")}
-          </ScreenLink>
-        </FramerMotion.li>
-        <FramerMotion.li variants=liVariants>
-          <ScreenLink href="/profile" toggleKind>
-            {React.string("Profile")}
-          </ScreenLink>
-        </FramerMotion.li>
-      </ul>
-    </nav>
+    <ScreenLinks toggleKind />
   </FramerMotion.div>;
 };
