@@ -6,8 +6,8 @@ display: flex;
 align-items: center;
 justify-content: center;
 
-padding-top: 3rem;
-padding-bottom: 3rem;
+margin-top: 6rem;
+margin-bottom: 6rem;
 |}
 ];
 
