@@ -5,6 +5,7 @@ cursor: pointer;
 text-decoration-line: underline;
 text-decoration-color: $(Theme.blue);
 text-decoration-thickness: 2px;
+text-underline-position: from-font;
 
 &:hover {
   color: $(Theme.blue);
