@@ -24,12 +24,16 @@ module Languages = {
   [@mel.module "highlight.js/lib/languages/haskell"]
   external haskell: language = "default";
 
+  [@mel.module "highlight.js/lib/languages/shell"]
+  external shell: language = "default";
+
   let all = [|
     ("javascript", javascript),
     ("python", python),
     ("text", plaintext),
     ("reasonml", reasonml),
     ("purescript", haskell),
+    ("shell", shell),
   |];
 };
 
