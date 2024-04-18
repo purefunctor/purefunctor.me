@@ -1,5 +1,6 @@
 import { globSync } from "glob";
 import mdx from "@mdx-js/rollup";
+import mdxConfiguration from "../mdx.config.js";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { basename, resolve } from "node:path";
 import { defineConfig } from "vite";
@@ -26,6 +27,6 @@ export default defineConfig({
     },
     outDir: "./dist",
   },
-  plugins: [mdx(), nodeResolve()],
+  plugins: [mdx(mdxConfiguration), nodeResolve()],
   publicDir: resolve(__dirname, "..", "public"),
 });

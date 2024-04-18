@@ -1,2 +1,2 @@
 import { register } from "node:module";
-register("@mdx-js/node-loader", import.meta.url)
+register("./mdx-loader.mjs", import.meta.url);
