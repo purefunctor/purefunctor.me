@@ -7,4 +7,10 @@ export default defineConfig({
     outDir: "./dist",
   },
   plugins: [mdx(), nodeResolve()],
+  server: {
+    headers: {
+      "Cross-Origin-Opener-Policy": "same-origin",
+      "Cross-Origin-Embedder-Policy": "require-corp",
+    },
+  },
 });
