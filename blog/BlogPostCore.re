@@ -15,6 +15,8 @@ module type MdxModule = {
   let slug: array(string);
   let title: string;
   let description: string;
+  let published: Js.Date.t;
+  let readingTime: BlogPostHeader.readingTime;
 
   [@react.component]
   let make: (~components: customComponents('code, 'pre)) => React.element;
@@ -141,7 +143,6 @@ margin-bottom: 6rem;
 }
 
 & > h1 {
-  border-bottom: 1px dotted $(Theme.white_60);
   font-size: 3rem;
   margin: 3rem 0 0 0;
 }
@@ -156,7 +157,7 @@ margin-bottom: 6rem;
   margin: 3rem 0 0 0;
 }
 
-& p {
+& > p, & > blockquote > p {
   font-size: 1.1rem;
   line-height: 1.6;
   margin: 1rem 0 1rem 0;
@@ -185,10 +186,13 @@ module Make = (MdxModule: MdxModule) : MdxPost => {
   let slug = MdxModule.slug;
   let title = MdxModule.title;
   let description = MdxModule.description;
+  let published = MdxModule.published;
+  let readingTime = MdxModule.readingTime;
 
   [@react.component]
   let make = () => {
     <main className=mainCss>
+      <BlogPostHeader title description published readingTime />
       <MdxModule components={code: CustomCode.make, pre: CustomPre.make} />
     </main>;
   };

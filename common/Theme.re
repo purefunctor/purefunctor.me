@@ -3,6 +3,7 @@ let blue = CssJs.hex("C8E6F9");
 let mint = CssJs.hex("C9F7E5");
 
 let white = CssJs.hex("F5F5F5");
+let white_20 = CssJs.hex("C4C4C4");
 let white_60 = CssJs.hex("626262");
 let black = CssJs.hex("1F1F1F");
 
