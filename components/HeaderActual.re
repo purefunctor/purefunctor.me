@@ -36,7 +36,7 @@ let make =
       <Icons.BookLine />
       <Link href="/"> {React.string("Justin Garcia")} </Link>
       <div>
-        <button onClick={_ => toggleKind()}>
+        <button ariaLabel="open navigation screen" onClick={_ => toggleKind()}>
           <Icons.MenuLine size="1.5rem" />
         </button>
       </div>
