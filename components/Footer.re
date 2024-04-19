@@ -1,7 +1,6 @@
-let className =
-  "hanken-grotesk-regular "
-  ++ [%cx
-    {|
+let className = [%cx
+  {|
+font-family: "Hanken Grotesk";
 display: flex;
 flex-direction: column;
 gap: 4px;
@@ -12,7 +11,7 @@ gap: 4px;
   gap: 4px;
 }
 |}
-  ];
+];
 let separatorCss = [%cx "color: $(Theme.mint)"];
 let heartIconCss = [%cx "color: $(Theme.pink)"];
 
