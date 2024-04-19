@@ -1,33 +1,4 @@
-type customComponents('code, 'pre) = {
-  code:
-    (
-      {
-        ..
-        "className": option(string),
-        "children": option(string),
-      } as 'code
-    ) =>
-    React.element,
-  pre: ({.. "children": React.element} as 'pre) => React.element,
-};
-
-module type MdxModule = {
-  let slug: array(string);
-  let title: string;
-  let description: string;
-  let published: Js.Date.t;
-  let readingTime: BlogPostHeader.readingTime;
-
-  [@react.component]
-  let make: (~components: customComponents('code, 'pre)) => React.element;
-};
-
-module type MdxPost = {
-  include MdxModule;
-
-  [@react.component]
-  let make: unit => React.element;
-};
+open Mdx_ppx_runtime;
 
 [@mel.module "css.escape"] external cssEscape: string => string = "default";
 
@@ -182,18 +153,21 @@ margin-bottom: 6rem;
 |}
 ];
 
-module Make = (MdxModule: MdxModule) : MdxPost => {
-  let slug = MdxModule.slug;
-  let title = MdxModule.title;
-  let description = MdxModule.description;
-  let published = MdxModule.published;
-  let readingTime = MdxModule.readingTime;
+module type MdxPost = {
+  include MdxMeta;
+
+  [@react.component]
+  let make: unit => React.element;
+};
+
+module MakePost = (MdxRaw: MdxRaw) => {
+  include MdxRaw;
 
   [@react.component]
   let make = () => {
     <main className=mainCss>
       <BlogPostHeader title description published readingTime />
-      <MdxModule components={code: CustomCode.make, pre: CustomPre.make} />
+      <MdxRaw components={code: CustomCode.make, pre: CustomPre.make} />
     </main>;
   };
 };

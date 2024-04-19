@@ -5,9 +5,10 @@
   (glob_files mdx/*.mdx))
  (libraries
   common
+  mdx_ppx_runtime
   melange-webapi
   reason-react
   styled-ppx.css
   styled-ppx.emotion)
  (preprocess
-  (pps melange.ppx reason-react-ppx styled-ppx)))
+  (pps mdx_ppx melange.ppx reason-react-ppx styled-ppx)))

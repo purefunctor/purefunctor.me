@@ -1,7 +1,4 @@
-type readingTime = {
-  text: string,
-  words: int,
-};
+open Mdx_ppx_runtime;
 
 let subtitleCss = [%cx
   {|
