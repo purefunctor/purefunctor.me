@@ -23,7 +23,19 @@ function renderSingle(name, slug) {
 
   let head = `
 <meta name="description" content="justin garcia's website and blog">
-<meta property="og:image" content="/banner.png">
+
+<meta property="og:url" content="https://purefunctor.me">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Justin Garcia">
+<meta property="og:description" content="justin garcia's website and blog">
+<meta property="og:image" content="https://purefunctor.me/banner.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="purefunctor.me">
+<meta property="twitter:url" content="https://purefunctor.me">
+<meta name="twitter:title" content="Justin Garcia">
+<meta name="twitter:description" content="justin garcia's website and blog">
+<meta name="twitter:image" content="https://purefunctor.me/banner.png">
 ${styles}
   `;
 
