@@ -1,0 +1,7 @@
+(executable
+ (name pp)
+ (modules pp)
+ (libraries mdx_ppx ppxlib))
+
+(cram
+ (deps ./pp.exe ./success.input ./failure.input))

@@ -1,0 +1,7 @@
+(library
+ (name mdx_ppx)
+ (public_name website.mdx_ppx)
+ (kind ppx_rewriter)
+ (libraries ppxlib)
+ (preprocess
+  (pps ppxlib.metaquot)))

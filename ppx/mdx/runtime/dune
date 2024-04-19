@@ -1,0 +1,7 @@
+(library
+ (name mdx_ppx_runtime)
+ (public_name website.mdx_ppx.runtime)
+ (modes melange)
+ (libraries melange.js reason-react)
+ (preprocess
+  (pps melange.ppx reason-react-ppx)))
