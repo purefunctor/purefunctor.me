@@ -165,6 +165,7 @@ module MakePost = (MdxRaw: MdxRaw) => {
 
   [@react.component]
   let make = () => {
+    Meta.useMeta(~title, ~description);
     <main className=mainCss>
       <BlogPostHeader title description published readingTime />
       <MdxRaw components={code: CustomCode.make, pre: CustomPre.make} />
