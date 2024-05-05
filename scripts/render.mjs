@@ -5,6 +5,7 @@ import { globSync } from "glob";
 import { constructStyleTagsFromChunks, extractCriticalToChunks } from "@emotion/server";
 
 import * as Render from "../_build/default/app/output/app/Render.mjs";
+import * as Meta from "../_build/default/app/output/common/Meta.mjs";
 import * as ReactDOMServer from "react-dom/server";
 
 const template = fs.readFileSync("./index.html", "utf-8")
@@ -14,27 +15,33 @@ const template = fs.readFileSync("./index.html", "utf-8")
   .replace("index.css", resolve(basename(import.meta.url), "..", "index.css"));
 
 function renderSingle(name, slug) {
+  Meta.resetCurrent();
+
   const element = Render.elementFor(slug);
   const markup = ReactDOMServer.renderToString(element);
   const chunks = extractCriticalToChunks(markup);
+
+  const title = Meta.currentTitle.contents;
+  const description = Meta.currentDescription.contents;
 
   const html = chunks.html;
   const styles = constructStyleTagsFromChunks(chunks);
 
   let head = `
-<meta name="description" content="justin garcia's website and blog">
+<title>${title}</title>
+<meta name="description" content="${description}">
 
 <meta property="og:url" content="https://purefunctor.me">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Justin Garcia">
-<meta property="og:description" content="justin garcia's website and blog">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${description}">
 <meta property="og:image" content="https://purefunctor.me/banner.png">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta property="twitter:domain" content="purefunctor.me">
 <meta property="twitter:url" content="https://purefunctor.me">
-<meta name="twitter:title" content="Justin Garcia">
-<meta name="twitter:description" content="justin garcia's website and blog">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${description}">
 <meta name="twitter:image" content="https://purefunctor.me/banner.png">
 ${styles}
   `;

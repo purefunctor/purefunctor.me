@@ -61,6 +61,10 @@ $(Theme.afterMedium) {
 
 [@react.component]
 let make = () => {
+  Meta.useMeta(
+    ~title="Justin Garcia",
+    ~description="justin garcia's website and blog",
+  );
   <main className=indexCss>
     <div className=containerCss>
       <IndexHeader />

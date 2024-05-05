@@ -27,6 +27,10 @@ flex-grow: 1;
 
 [@react.component]
 let make = () => {
+  Meta.useMeta(
+    ~title="Justin Garcia - About Me",
+    ~description="a few things about me",
+  );
   <main className=profileCss>
     <article className=articleCss>
       <header> <h1> {React.string("about me")} </h1> </header>

@@ -14,6 +14,10 @@ margin-bottom: 6rem;
 
 [@react.component]
 let make = () => {
+  Meta.useMeta(
+    ~title="Justin Garcia - Not Found",
+    ~description="looks like there's nothing here",
+  );
   <Main>
     <h1> {React.string("looks like there's nothing here...")} </h1>
     <p>

@@ -25,6 +25,10 @@ $(Theme.afterSmall) {
 
 [@react.component]
 let make = () => {
+  Meta.useMeta(
+    ~title="Justin Garcia - Work",
+    ~description="a summary of my active projects and work experience",
+  );
   <main className=workCss>
     <div className=containerCss>
       <WorkArticle
