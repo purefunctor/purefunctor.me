@@ -13,6 +13,11 @@ margin-bottom: 3rem;
 module Entry = {
   [@react.component]
   let make = (~post: (module BlogPostCore.MdxPost)) => {
+    Meta.useMeta(
+      ~title="Justin Garcia - Blog",
+      ~description="an index of my blog posts",
+    );
+
     let (module Post) = post;
 
     let href =
