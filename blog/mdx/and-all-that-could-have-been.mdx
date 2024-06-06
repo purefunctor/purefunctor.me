@@ -1,0 +1,79 @@
+export const title = "And All That Could Have Been";
+export const description = "musings on my personal journey with functional programming.";
+export const published = new Date("2024-06-07");
+
+## the becoming
+
+Lately, I've been thinking about what my programming journey would have looked like had I not dedicated most of my mid-teenage years focusing on functional programming, opting instead for the well-trodden path of building stuff for the web.
+
+At 15 years old, I had a strong desire to learn programming by myself, but I was occasionally blocked by the apparent lack of projects that I could build. I had a juvenile understanding about what it means to have things going on in the long-term as the environment around me was filled with fleeting experiences and significant amounts of uncertainty.
+
+Occasionally, when I compared my progress to my peers, it didn't help that I was only exposed to the "what" and not the "how" of the things that they were showcasing. This had cast a lot of self-doubt in my abilities and demotivated me from building anything significant as I started to believe that I was taking too long with my efforts, leading to a lot of frustration. As you can imagine, these feelings are particularly difficult to process for a teen with a limited support system. 
+
+As a result, I had begun looking for shortcuts, kind of like falling for get-rich-quick schemes where instead of the promise of monetary gain, it had been for self-validation. I had also convinced myself that pursuing something unconventional and _different_ would be just the solution that I was looking for, and so my journey began.
+
+## first contact
+
+To set the scene, I was in tutorial hell. I was stuck trying to figure out what's possible with certain languages rather than actually using them to build things. Even worse was that I _relished_ it, given my mentality of looking for shortcuts.
+
+If my Search History on Google is accurate, my first search of Haskell was on the 3rd of May, 2019 at 4:08 AM Philippine Time. Shortly before that were searches for "programming paradigms", "Functional Programming", and "Procedural Programming" at 3:44 AM.
+
+Unfortunately, my search history didn't track which pages I visited during that time, so I'm not entirely certain what results were given to me. That being said, functional programming, especially Haskell was now in my radar for the solution, though it was not until August when I first searched for "haskell tutorial".
+
+My investment in Haskell was on and off much like my previous endeavors. However, it had rejuvinated my motivation to learn programming not just because I thought of it as the shortcut, but also because it was a challenge that didn't involve a long-term commitment.
+
+I recall trying to understand Functor, Applicative, and Monad's category theory definitions for days on end before a eureka moment allowed me to understand at most 10% more of the concept. It's a terrible way to learn but at least I knew some big words to say when talking about what I've been doing.
+
+I discovered rather quickly that I had to *completely* unlearn everything that I've ever known about coding at that point to make progress in learning but surprisingly... that didn't stop me unlike all other skill issues I've had. Unknowingly, I've made a long commitment that lasts to this day.
+
+## web fatigue
+
+Another reason why I felt that I should pursue something different was the belief that the web was an already-filled niche. At the time, I got that impression because of the sheer number of courses with the promise of success being pushed in the tutorial hell that I was in. Likewise, all of my peers were doing web programming and juvenile feelings of wanting to be unique also contributed to that.
+
+Eventually came the time for me to start being interested in building my own website and I had to get over this fatigue somehow. I remember the very first iteration of this website being built in Django of all things, but it wasn't really something that I thoroughly enjoyed.
+
+I looked for other things to do, and I eventually stumbled upon the idea of building a LISP in Python. At the time, [amalgam-lisp](https://github.com/purefunctor/amalgam-lisp) was one of the largest projects that I've built thus far. There was always something new to be implemented and I worked on it pretty extensively. While my pace wasn't the best, I was proud of being able to focus on a single project for an extended amount of time. I eventually burnt out after 5 months of consistent work and decided once more to look for something else.
+
+## take two
+
+Driven by my newfound appreciation for programming languages, I set my sights on relearning functional programming once more. This time around, I made it a goal to build something practical with it. Haskell seemed like a natural choice, given my existing familiarity. Given the hardware I had at the time, though, sluggish tooling was very detrimental to my experience.
+
+Then, there was PureScript: a language heavily inspired by Haskell that compiles to JavaScript. Using it was magical, it felt exactly like Haskell but with a compiler small enough for my whopping 4 GBs of RAM to be able to run without my potato struggling for its life. Even better was that it had frontend frameworks I could realistically use to achieve my goal.
+
+PureScript was my first exposure to JS-centric web development, with Halogen being one of the first frontend frameworks that I've used seriously up to that point. As you might expect, my inexperience with frontend web development had presented a lot of skill issues I had to tackle alongside learning the framework itself. Despite all this, I worked my way through and I understood more on each passing day, loving the paradigm even more.
+
+## compiler arc
+
+Several months passed by and I was getting quite competent with PureScript, and I was on my way to learning the ways of its type-level programming capabilities. Consequently, this inspired me to take a look into the design and implementation of type systems in functional programming languages. 
+
+I gave the exploration of the PureScript compiler a shot and I was pleasantly surprised at how simple it was. It was in Haskell, sure, but PureScript itself was similar enough in terms of syntax and library APIs such that knowledge comfortably transfers over. Armed with this newfound knowledge, I began contributing small bug fixes and quality of life changes to the compiler.
+
+A few PRs later, I decided to continue the previous effort to add [type-level naturals](https://github.com/purescript/purescript/pull/3058) to the language in the form of the [type-level integers](https://github.com/purescript/purescript/pull/4207) pull request. This was a great learning opportunity for me, especially towards learning more about PureScript's type system. Around this time, I also set my sights on adding [visible type applications](https://github.com/purescript/purescript/pull/4235) to the language, which was ultimately superseded by a future [reimplementation](https://github.com/purescript/purescript/pull/4436).
+
+With the work that I've done for the compiler, I was invited to join the Compiler Team as a Core Collaborator, culminating in my induction as a Core Team Member a few months after.
+
+This is an achievement that I'm quite proud of to have made. For several years until then, I've been riddled with feelings of self-doubt and having no sense of belonging, as depressing as it sounds. For my contributions to be recognized and appreciated was a huge reality check for me to resolve these insecurities.
+
+## and all that could have been
+
+Since this past January, I've been hacking on a full-stack project, [sabihin.ph](https://github.com/purefunctor/sabihin), to teach myself OCaml and ReasonML. Part of the tech stack that I've used for that project is React.js, which I hadn't touched _at all_ during my days of web fatigue. I found it pretty easy to pick up and it didn't take too long for me to be productive in it. I'm still learning a lot about React.js and the overall ecosystem around it, but I've found it pretty fun.
+
+These past few weeks I've been wondering about what my journey would have looked like if I didn't encounter web fatigue, or if I learned to learn by building projects, or if I had access to better hardware at the time when I was first starting out.
+
+> _If I had started learning React.js all those years ago, what would I be like today? Would I be 10x frontend developer building apps and developing libraries and frameworks?_
+
+> _What if I started off with OCaml instead of Haskell? Would that have made my entry into functional programming significantly easier?_
+
+I realize now that these questions come from a place of uncertainty, more specifically from my worries about breaking into a tech career. Functional programming jobs are pretty scarce, especially here in the Philippines. The current economy certainly doesn't help either.
+
+If I could have a do-over of my journey, what would I change? The answer is... probably nothing.
+
+Was I terribly inefficient at learning in my early years? Yes, but I'll cut 16-year-old me some slack on the basis of well... being a teenager who didn't know anything better.
+
+I like to think that my journey is unique in that I had the opportunity to learn functional programming before I learned how to be a software engineer. It's hard to identify how exactly it changes the way I approach writing programs and solving problems, but as I navigate my life as a professional I hope it becomes more apparent.
+
+I gave myself a headstart and I made the most out of it with what I had at the time. In a couple of weeks, I'll be 21 years old and it's quite surreal that I've only been at this journey for a quarter of my life, and that I have so much more things to experience and learn in the future.
+
+I'm grateful to all the people who believed and trusted in my abilities, those who encouraged me to try new things and to just _do_, and those who helped shape who I am today as a developer and as a person.
+
+\- Justin
